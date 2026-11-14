@@ -3,7 +3,7 @@ from routes import routes
 
 app = Flask(__name__)
 
-@app.route("/routes/<route_number>", methods=['PUT'])
+@app.route("/routes/update/<route_number>", methods=['PUT'])
 def update_route(route_number):
     #Send a request for the JSON file
     data = request.get_json()
