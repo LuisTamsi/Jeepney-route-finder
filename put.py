@@ -7,6 +7,7 @@ app = Flask(__name__)
 def update_route(route_number):
     #Send a request for the JSON file
     data = request.get_json()
+    data.pop("route_number", None) #remove "route_number" from editable choices
 
     #Detects if "data" is empty, returns code 400 if data is empty
     if not data:
