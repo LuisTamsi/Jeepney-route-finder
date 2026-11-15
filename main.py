@@ -10,3 +10,5 @@ app.register_blueprint(get_bp)
 app.register_blueprint(post_bp)
 app.register_blueprint(put_bp)
 app.register_blueprint(delete_bp)
+if __name__ == '__main__':
+    app.run()

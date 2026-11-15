@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from routes import routes
 
 bp = Blueprint("delete", __name__)

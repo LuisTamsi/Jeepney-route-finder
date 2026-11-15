@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from routes import routes
 
 bp = Blueprint("get", __name__)
@@ -14,5 +14,3 @@ def get_routes_by_number(route_number):
             return jsonify(route), 200
     return jsonify(error='Route not found'), 404 
                    
-if __name__ == '__main__':
-    bp.run(debug=True)
