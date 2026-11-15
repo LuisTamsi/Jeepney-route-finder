@@ -1,16 +1,15 @@
-from flask import Flask, request, jsonify
-from routes import routes
+from flask import Blueprint, request, jsonify
+from routes import routes, validate_route
 
 bp = Blueprint("post", __name__)
 
-@app.route("/api/v1/routes/create/", methods=["POST"])
+@bp.route("/api/v1/routes/create/", methods=["POST"])
 def create_route():
-    data = request.get_json()
+    data, error = validate_route(request.get_json(silent=True))
+    if error:
+        return jsonify({"error": error}), 400
 
-    if not data or not all(k in data for k in ("route_number", "origin", "destination", "fare")):
-        return jsonify({"error": "Missing required fields"}), 400
-
-    route_id = str(data["route_number"])
+    route_id = data["route_number"]
 
     for r in routes:
         if str(r["route_number"]) == route_id:
@@ -30,5 +29,3 @@ def create_route():
         "route": new_route
     }), 201
 
-if __name__ == "__main__":
-    app.run(debug=True)

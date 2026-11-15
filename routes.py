@@ -1,3 +1,5 @@
+import math
+
 routes = [
     {
         "route_number": "1",
@@ -90,3 +92,32 @@ routes = [
         "fare": 19
     }
 ]
+
+
+def validate_route(data, *, partial=False):
+    """Return a normalized payload and an error, without changing stored routes."""
+    fields = {'route_number', 'origin', 'destination', 'fare'}
+    if not isinstance(data, dict) or not data:
+        return None, 'Provide a non-empty JSON object'
+    if data.keys() - fields:
+        return None, 'Unknown route fields'
+    if not partial and fields - data.keys():
+        return None, 'Missing required fields'
+
+    normalized = data.copy()
+    if 'route_number' in data:
+        number = data['route_number']
+        if type(number) not in (str, int) or not str(number).strip():
+            return None, 'route_number must be a non-empty string or integer'
+        normalized['route_number'] = str(number).strip()
+    for field in ('origin', 'destination'):
+        if field in data:
+            if not isinstance(data[field], str) or not data[field].strip():
+                return None, f'{field} must be a non-empty string'
+            normalized[field] = data[field].strip()
+    if 'fare' in data:
+        fare = data['fare']
+        if (type(fare) not in (int, float) or fare < 0
+                or (isinstance(fare, float) and not math.isfinite(fare))):
+            return None, 'fare must be a finite, non-negative number'
+    return normalized, None
