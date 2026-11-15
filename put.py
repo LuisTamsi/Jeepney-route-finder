@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort
 from routes import routes
 
-app = Flask(__name__)
+bp = Blueprint("put", __name__)
 
-@app.route("/routes/update/<route_number>", methods=['PUT'])
+@bp.route("/routes/update/<route_number>", methods=['PUT'])
 def update_route(route_number):
     #Send a request for the JSON file
     data = request.get_json()
@@ -21,4 +21,4 @@ def update_route(route_number):
     abort(404, description="Route unavailable")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    bp.run(debug=True)

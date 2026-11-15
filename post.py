@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from routes import routes
 
-app = Flask(__name__)
+bp = Blueprint("post", __name__)
 
 @app.route("/api/v1/routes/create/", methods=["POST"])
 def create_route():

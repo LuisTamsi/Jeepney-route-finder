@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 from routes import routes
-app = Flask(__name__)
 
-@app.route("/api/v1/routes/<route_number>", methods=["DELETE"])
+bp = Blueprint("delete", __name__)
+
+@bp.route("/api/v1/routes/<route_number>", methods=["DELETE"])
 def delete_route(route_number):
     for index, route in enumerate(routes):
         if route["route_number"] == route_number:
